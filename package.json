@@ -1,0 +1,22 @@
+{
+  "bin": {
+    "todo": "index.js"
+  },
+  "preferGlobal": true,
+  "name": "todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jonas Jensen (jonas-jensen.com) <jonas.jensen@msn.com>",
+  "license": "ISC",
+  "dependencies": {
+    "dateism": "0.0.1",
+    "jsonfile": "^3.0.1",
+    "make-dir": "^1.0.0",
+    "pify": "^3.0.0"
+  }
+}

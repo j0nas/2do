@@ -15,7 +15,10 @@ const yesterdayFile = path.join(dir, dateism.yesterday() + '.json');
 
 // xTODO establish common format for serializing/deserialzing
 // xTODO save to file
-// TODO read from saved file
+// xTODO read from saved file
+// TODO list items as bullet points
+// TODO list done items as separate points
+// TODO mark item as done
 
 // v1.1
 // TODO save entry 'todo <item to be saved>' [-b,--bottom   send items to bottom of list]
@@ -25,7 +28,7 @@ const yesterdayFile = path.join(dir, dateism.yesterday() + '.json');
 
 
 
-const writeToFile = async () => {
+const writeFile = async () => {
   await makeDir(dir);
 
   const writeObject = {
@@ -40,26 +43,34 @@ const writeToFile = async () => {
   }
 };
 
-const readFile = async () => {
-  let object;
-  try {
-    object = await jsonFile.readFile(todayFile);
-  } catch (err) {
-    const files = await fsReaddir(dir);
-    console.log("files", files);
-
-    object = await jsonFile.readFile(yesterdayFile);
-  }
-  console.log("object", object);
-
-};
-
-// const filesByLastModified = async file => [file, (await fsStat(path.join(directory, file))).mtimeMs];
-
-const getDirFilesByLastModified = async directory =>
-  (await fsReaddir(directory))
-    .map(fileName => [fileName, new Date(fileName.replace('.txt', ''))])
+const getDirFilesByLastModified = async directory => {
+  return (await fsReaddir(directory))
+    .filter(filename => filename.split('.')[1] === 'json')
+    .map(fileName => [fileName, new Date(fileName.replace('.json', ''))])
     .sort((a, b) => a[1] - b[1])
     .map(arr => arr[0]);
+};
 
-getDirFilesByLastModified(dir).then(res => console.log(res));
+const readFile = async () => {
+  try {
+    return await jsonFile.readFile(todayFile);
+  } catch (err) {
+    try {
+      return await jsonFile.readFile(yesterdayFile);
+    } catch (err) {
+      const filesByDate = await getDirFilesByLastModified(dir);
+      if (!filesByDate || !filesByDate.length) {
+        throw new Error('No filesByDate found!');
+      }
+
+      return await jsonFile.readFile(path.join(dir, filesByDate[0]));
+    }
+  }
+};
+
+const printItems = async () => {
+  const items = await readFile();
+
+  console.log('TODO:'  + items.todo.map(item => "\n - " + item).join('') + "\n");
+  console.log('DONE:'  + items.todo.map(item => "\n - " + item).join('') + "\n");
+};

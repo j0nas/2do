@@ -54,12 +54,12 @@ const readFile = async () => {
 
 };
 
-const getDirFilesByLastModified = async directory => {
-  const files = await fsReaddir(directory);
-  const filesByLastModified = async file => [file, (await fsStat(path.join(directory, file))).mtimeMs];
-  const comparable = await Promise.all(files.map(filesByLastModified));
+// const filesByLastModified = async file => [file, (await fsStat(path.join(directory, file))).mtimeMs];
 
-  return comparable.concat().sort((a, b) => b[1] - a[1]).map(item => item[0]);
-};
+const getDirFilesByLastModified = async directory =>
+  (await fsReaddir(directory))
+    .map(fileName => [fileName, new Date(fileName.replace('.txt', ''))])
+    .sort((a, b) => a[1] - b[1])
+    .map(arr => arr[0]);
 
 getDirFilesByLastModified(dir).then(res => console.log(res));

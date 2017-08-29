@@ -4,9 +4,10 @@ const jsonFile = promisify(require('jsonfile'));
 const path = require('path');
 const dateism = require('dateism')('YYYY-MM-DD');
 const fs = require('fs');
+const inquirer = require('inquirer');
 
-const fsStat = promisify(fs.stat);
 const fsReaddir = promisify(fs.readdir);
+const prompt = inquirer.createPromptModule();
 
 //const dir = '/Users/jonas/Desktop/node-todo';
 const dir = '/Users/jonas/Desktop/n';
@@ -49,8 +50,8 @@ const getDirFilesByLastModified = async directory => {
     .map(fileName => [fileName, new Date(fileName.replace('.json', ''))])
     .sort((a, b) => a[1] - b[1])
     .map(arr => arr[0]);
-};
 
+};
 const readFile = async () => {
   try {
     return await jsonFile.readFile(todayFile);
@@ -66,11 +67,27 @@ const readFile = async () => {
       return await jsonFile.readFile(path.join(dir, filesByDate[0]));
     }
   }
+
 };
-
 const printItems = async () => {
-  const items = await readFile();
 
+  const items = await readFile();
   console.log('TODO:'  + items.todo.map(item => "\n - " + item).join('') + "\n");
   console.log('DONE:'  + items.todo.map(item => "\n - " + item).join('') + "\n");
 };
+
+const ask = async () => {
+  const items = await readFile();
+
+  const question = {
+    type: 'list',
+    name: 'items',
+    message: 'TOOD:',
+    choices: items.todo,
+  };
+
+  const answer = await prompt(question);
+  console.log("answer", answer);
+};
+
+ask();

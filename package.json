@@ -1,6 +1,6 @@
 {
   "bin": {
-    "todo": "index.js"
+    "2do": "./index.js"
   },
   "preferGlobal": true,
   "name": "2do",
@@ -8,8 +8,15 @@
   "description": "The simplest to-do app in your terminal",
   "main": "index.js",
   "keywords": [],
-  "author": "Jonas Jensen (jonas-jensen.com) <jonas.jensen@msn.com>",
+  "author": "Jonas Jensen <jonas.jensen@msn.com> (https://jonas-jensen.com)",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "dependencies": {
     "commander": "^2.11.0",
     "dateism": "0.0.1",

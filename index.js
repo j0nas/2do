@@ -1,9 +1,9 @@
 #! /usr/bin/env node
 
-const commander = require('./commander');
 const read = require('./read');
 const write = require('./write');
 const print = require('./print');
+const commander = require('./commander');
 
 const readFile = async () => {
   let readObject = {todo: [], done: []};
@@ -17,11 +17,14 @@ const readFile = async () => {
 };
 
 (async () => {
-  const item = commander.args.join(' ');
   const todos = await readFile();
+  const printDoneItems = () => print.staticList('DONE:', todos && todos.done);
+  const program = commander(printDoneItems);
+
+  const item = program.args.join(' ');
 
   if (item) {
-    todos.todo = commander.top ? [item, ...todos.todo] : [...todos.todo, item];
+    todos.todo = program.top ? [item, ...todos.todo] : [...todos.todo, item];
     await write.objectToFile(todos);
   } else {
     const response = await print.itemsInObject(todos);

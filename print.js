@@ -8,6 +8,10 @@ const itemsInObject = async items =>
     choices: items.todo,
   }]);
 
+const staticList = (prefix, items) =>
+  console.log(prefix + ' ' + (items || []).map(item => "\n - " + item).join('') + "\n");
+
 module.exports = {
   itemsInObject,
+  staticList,
 };

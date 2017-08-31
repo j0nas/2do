@@ -15,7 +15,7 @@ const program = async () => {
   }
 
   if (todo) {
-    readObject.todo = [...readObject.todo, todo];
+    readObject.todo = commander.top ? [todo, ...readObject.todo] : [...readObject.todo, todo];
     await write.objectToFile(readObject);
     console.log("Added todo.");
   } else {

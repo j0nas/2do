@@ -2,14 +2,17 @@
 // xTODO save to file
 // xTODO read from saved file
 
-// TODO add to file by command
-
-// TODO list items as bullet points
-// TODO list done items as separate points
-// TODO mark item as done
+// xTODO add to file by command
+// xTODO list done items as separate points
 
 // v1.1
-// TODO save entry 'todo <item to be saved>' [-t,--top   send item to top of list (bottom by default)]
+// xTODO save entry 'to-do <item to be saved>' [-t,--top   send item to top of list (bottom by default)]
+
+// TODO list items as checkboxes
+// TODO mark item as done
+// TODO unmark done item
+// TODO delete done items when reading from !today's file
 
 // v2
 // TODO sync to firebase?
+// TODO login?

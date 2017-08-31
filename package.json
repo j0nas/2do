@@ -14,6 +14,7 @@
   "author": "Jonas Jensen (jonas-jensen.com) <jonas.jensen@msn.com>",
   "license": "ISC",
   "dependencies": {
+    "commander": "^2.11.0",
     "dateism": "0.0.1",
     "inquirer": "^3.2.2",
     "jsonfile": "^3.0.1",
